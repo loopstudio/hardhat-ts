@@ -6,8 +6,18 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
+import "@nomiclabs/hardhat-web3";
 
 dotenv.config();
+
+// Custom task
+task("balance", "Prints an account's balance")
+  .addParam("account", "The account's address")
+  .setAction(async (taskArgs, hre) => {
+    const balance = await hre.ethers.provider.getBalance(taskArgs.account);
+
+    console.log(hre.ethers.utils.formatEther(balance), "ETH");
+  });
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
